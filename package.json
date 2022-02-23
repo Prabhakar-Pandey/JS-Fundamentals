@@ -1,0 +1,18 @@
+{
+  "name": "authentication-service",
+  "version": "1.0.0",
+  "description": "this service will be responsible to authenticate the application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "prabhakar pandey",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2"
+  }
+}
