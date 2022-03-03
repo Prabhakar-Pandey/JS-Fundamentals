@@ -72,30 +72,51 @@ app.get("/securedRoute",checkLogin,function(req,res){
 
 //var data = [jhhggh];
 
+// DB related codes
+const MongoClient = require('mongodb').MongoClient
+const myurl = 'mongodb://localhost:27017';
+var db;
+MongoClient.connect(myurl, (err, client) => {
+    if (err) return console.log(err)
+    db = client.db('myTodo')
+    
+});
+
 
 app.post("/login",function(req,res){
 
-
-    
     const user = req.body.username;
     const pass = req.body.password;
+console.log(typeof pass)
+    db.collection("users").find({"name":user,"password":pass}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(JSON.stringify(result));
 
-    if(user==="admin" && pass === "admin"){
-        console.log(req.session)
-        res.cookie("authcode","asdasdasdsadasdasd")
-        req.session.username = user;
+        if(result.length){
+            console.log(req.session)
+            res.cookie("authcode","asdasdasdsadasdasd")
+            req.session.username = user;
+            res.send({
+                status:"Success",
+                data:"User is authenticated, Login success "
+            })
+            return;
+        }
+
         res.send({
-            status:"Success",
-            data:"User is authenticated, Login success "
+            status:"Error",
+            data:"not a valid user"
         })
-        return;
-    }
+      });
 
 
-    res.send({
-        status:"Error",
-        data:"not a valid user"
-    })
+
+    
+
+    
+
+
+    
 
 })
 
